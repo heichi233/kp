@@ -1,7 +1,10 @@
 # kp
-仅适配本人的incudal的朝鲜探针安装方案，其余用户其余商家不保证使用,运行脚本时请保证使用root/sudo运行
-# 安装命令
-~~~
-apt upate && apt install curl wget
-sudo curl -sL https://porxy.ooo.vg/raw.githubusercontent.com/heichi233/kp/main/setup.sh | sudo bash
-~~~
+
+仅适配本人 incudal 的朝鲜节点探针安装方案，其余用户、其余商家不保证可用。
+运行脚本时请保证使用 `root` 权限或配合 `sudo` 运行。
+
+## 安装命令
+
+```bash
+apt update && apt install -y curl wget
+curl -sL [https://porxy.ooo.vg/raw.githubusercontent.com/heichi233/kp/main/setup.sh](https://porxy.ooo.vg/raw.githubusercontent.com/heichi233/kp/main/setup.sh) | sudo bash
