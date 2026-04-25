@@ -7,4 +7,4 @@
 
 ```bash
 apt update && apt install -y curl wget
-curl -sL https://proxy.ooo.vg/raw.githubusercontent.com/heichi233/kp/main/setup.sh | sudo bash
+wget -qO setup.sh https://proxy.ooo.vg/raw.githubusercontent.com/heichi233/kp/main/setup.sh && sudo bash setup.sh
