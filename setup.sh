@@ -12,13 +12,13 @@ echo "========================================="
 echo ""
 
 # 1. 配置 IPv6 DNS
-echo ">>> [1/6] 正在配置 IPv6 DNS..."
+echo ">>> [1/5] 正在配置 IPv6 DNS..."
 echo -e "nameserver 2001:4860:4860::8888\nnameserver 2001:4860:4860::8844" > /etc/resolv.conf
 echo "✅ IPv6 DNS 配置完成 (/etc/resolv.conf)。"
 echo ""
 
 # 2. 剥离 IPv4 默认网关
-echo ">>> [2/6] 正在剥离 IPv4 默认网关（保留内网路由）..."
+echo ">>> [2/5] 正在剥离 IPv4 默认网关（保留内网路由）..."
 GW=$(ip route | grep default | awk '{print $3}')
 if [ -n "$GW" ]; then
     ip route del default via "$GW"
@@ -29,7 +29,7 @@ fi
 echo ""
 
 # 3. 验证网络
-echo ">>> [3/6] 正在验证 IPv6 网络连通性..."
+echo ">>> [3/5] 正在验证 IPv6 网络连通性..."
 echo "正在请求 curl -6 ip.sb 测定公网 IP："
 IPv6_IP=$(curl -s -6 ip.sb)
 if [ -n "$IPv6_IP" ]; then
@@ -40,8 +40,9 @@ fi
 echo ""
 
 # 4. 探针被控安装 (自动替换双栈代理)
-echo ">>> [4/6] 探针被控安装..."
-echo "💡 提示: 当前机器为纯 IPv6，脚本将使用双栈加速站 (proxy.ooo.vg) 为您替换 Github 链接。"
+echo ">>> [4/5] 探针被控安装..."
+echo "💡 提示 1: 当前机器为纯 IPv6，脚本将使用双栈加速站 (proxy.ooo.vg) 为您替换 Github 链接。"
+echo "💡 提示 2: 探针安装后若未上线，请检查您的探针主控服务器是否支持 IPv6。如果主控端没有 IPv6 地址，请自行安装 WARP 提供 IPv4 出口！"
 read -p "请输入您的探针安装命令 (直接按回车跳过): " probe_cmd < /dev/tty
 
 if [ -n "$probe_cmd" ]; then
@@ -68,26 +69,10 @@ else
 fi
 echo ""
 
-# 5. 安装 WARP (可选)
-echo ">>> [5/6] WARP 安装 (可选)"
-read -p "❓ 是否现在安装 WARP？(y/n, 默认 n): " install_warp < /dev/tty
-install_warp=${install_warp:-n}
-
-if [[ "$install_warp" =~ ^[Yy]$ ]]; then
-    echo "📦 正在安装 WARP 所需的系统依赖..."
-    apt update -y
-    apt install -y iputils-ping wget curl iproute2 net-tools openresolv dnsutils iptables wireguard-tools
-    
-    echo "🚀 正在通过自有仓库代理下载并运行 WARP 安装脚本..."
-    wget -N -O menu.sh https://proxy.ooo.vg/raw.githubusercontent.com/heichi233/kp/main/menu.sh && bash menu.sh 4
-else
-    echo "⏭️ 已跳过 WARP 安装。"
-fi
-echo ""
-
-# 6. 安装代理提示
-echo ">>> [6/6] 关于【搭建代理】的说明..."
-echo "⛔ 不推荐搭建代理: 当前机器 IP 路由可能较差 (如 HE 线路朝鲜 IP 广播，全球 Ping 300+)，且宿主机母鸡已屏蔽大陆方向的弱代理协议。如确需折腾，请自行研究。"
+# 5. 其他注意事项 (WARP & 代理)
+echo ">>> [5/5] 关于【IPv4 出口与代理】的说明..."
+echo "🌐 WARP: 本脚本不再内置 WARP 安装。如需 IPv4 出口，请自行安装 WARP。"
+echo "⛔ 代理: 不推荐搭建代理。当前机器 IP 路由可能较差 (如 HE 线路朝鲜 IP 广播，全球 Ping 300+)，且宿主机母鸡已屏蔽大陆方向的弱代理协议。如确需折腾，请自行研究。"
 echo ""
 
 echo "========================================="
