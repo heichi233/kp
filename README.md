@@ -7,4 +7,4 @@
 
 ```bash
 apt update && apt install -y curl wget
-curl -sL [https://porxy.ooo.vg/raw.githubusercontent.com/heichi233/kp/main/setup.sh](https://porxy.ooo.vg/raw.githubusercontent.com/heichi233/kp/main/setup.sh) | sudo bash
+curl -sL https://proxy.ooo.vg/raw.githubusercontent.com/heichi233/kp/main/setup.sh | sudo bash
