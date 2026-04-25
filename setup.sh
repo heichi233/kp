@@ -17,7 +17,7 @@ echo -e "nameserver 2001:4860:4860::8888\nnameserver 2001:4860:4860::8844" > /et
 echo "✅ IPv6 DNS 配置完成 (/etc/resolv.conf)。"
 echo ""
 
-# 2. 剥离 IPv4 默认网关
+# 2. 剥别 IPv4 默认网关
 echo ">>> [2/6] 正在剥离 IPv4 默认网关（保留内网路由）..."
 GW=$(ip route | grep default | awk '{print $3}')
 if [ -n "$GW" ]; then
@@ -41,17 +41,17 @@ echo ""
 
 # 4. 探针被控安装 (自动替换双栈代理)
 echo ">>> [4/6] 探针被控安装..."
-echo "💡 提示: 当前机器为纯 IPv6，脚本将使用双栈加速站 (porxy.ooo.vg) 为您替换 Github 链接。"
+echo "💡 提示: 当前机器为纯 IPv6，脚本将使用双栈加速站 (proxy.ooo.vg) 为您替换 Github 链接。"
 read -p "请输入您的探针安装命令 (直接按回车跳过): " probe_cmd
 
 if [ -n "$probe_cmd" ]; then
     # 替换原始命令中的 githubusercontent 链接
-    modified_cmd="${probe_cmd//https:\/\/raw.githubusercontent.com/https:\/\/porxy.ooo.vg\/raw.githubusercontent.com}"
+    modified_cmd="${probe_cmd//https:\/\/raw.githubusercontent.com/https:\/\/proxy.ooo.vg\/raw.githubusercontent.com}"
     # 顺便兼容一下如果是 github.com 原始链接的替换
-    modified_cmd="${modified_cmd//https:\/\/github.com/https:\/\/porxy.ooo.vg\/github.com}"
+    modified_cmd="${modified_cmd//https:\/\/github.com/https:\/\/proxy.ooo.vg\/github.com}"
     
     # 在末尾追加 proxy 相关的参数
-    modified_cmd="${modified_cmd} --install-ghproxy https://porxy.ooo.vg"
+    modified_cmd="${modified_cmd} --install-ghproxy https://proxy.ooo.vg"
     
     echo "-----------------------------------------"
     echo "🔄 自动修改后的安装命令如下:"
