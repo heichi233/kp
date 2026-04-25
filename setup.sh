@@ -42,7 +42,6 @@ echo ""
 # 4. 探针被控安装 (自动替换双栈代理)
 echo ">>> [4/6] 探针被控安装..."
 echo "💡 提示: 当前机器为纯 IPv6，脚本将使用双栈加速站 (proxy.ooo.vg) 为您替换 Github 链接。"
-# 修复：加上 < /dev/tty 强制从键盘读取输入
 read -p "请输入您的探针安装命令 (直接按回车跳过): " probe_cmd < /dev/tty
 
 if [ -n "$probe_cmd" ]; then
@@ -71,13 +70,16 @@ echo ""
 
 # 5. 安装 WARP (可选)
 echo ">>> [5/6] WARP 安装 (可选)"
-# 修复：加上 < /dev/tty 强制从键盘读取输入
 read -p "❓ 是否现在安装 WARP？(y/n, 默认 n): " install_warp < /dev/tty
 install_warp=${install_warp:-n}
 
 if [[ "$install_warp" =~ ^[Yy]$ ]]; then
-    echo "🚀 正在下载并运行 WARP 安装脚本..."
-    wget -N https://gitlab.com/fscarmen/warp/-/raw/main/menu.sh && bash menu.sh d
+    echo "📦 正在安装 WARP 所需的系统依赖..."
+    apt update -y
+    apt install -y iputils-ping wget curl iproute2 net-tools openresolv dnsutils iptables wireguard-tools
+    
+    echo "🚀 正在通过自有仓库代理下载并运行 WARP 安装脚本..."
+    wget -N -O menu.sh https://proxy.ooo.vg/raw.githubusercontent.com/heichi233/kp/main/menu.sh && bash menu.sh 4
 else
     echo "⏭️ 已跳过 WARP 安装。"
 fi
