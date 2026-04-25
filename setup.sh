@@ -17,7 +17,7 @@ echo -e "nameserver 2001:4860:4860::8888\nnameserver 2001:4860:4860::8844" > /et
 echo "✅ IPv6 DNS 配置完成 (/etc/resolv.conf)。"
 echo ""
 
-# 2. 剥别 IPv4 默认网关
+# 2. 剥离 IPv4 默认网关
 echo ">>> [2/6] 正在剥离 IPv4 默认网关（保留内网路由）..."
 GW=$(ip route | grep default | awk '{print $3}')
 if [ -n "$GW" ]; then
@@ -42,7 +42,8 @@ echo ""
 # 4. 探针被控安装 (自动替换双栈代理)
 echo ">>> [4/6] 探针被控安装..."
 echo "💡 提示: 当前机器为纯 IPv6，脚本将使用双栈加速站 (proxy.ooo.vg) 为您替换 Github 链接。"
-read -p "请输入您的探针安装命令 (直接按回车跳过): " probe_cmd
+# 修复：加上 < /dev/tty 强制从键盘读取输入
+read -p "请输入您的探针安装命令 (直接按回车跳过): " probe_cmd < /dev/tty
 
 if [ -n "$probe_cmd" ]; then
     # 替换原始命令中的 githubusercontent 链接
@@ -70,7 +71,8 @@ echo ""
 
 # 5. 安装 WARP (可选)
 echo ">>> [5/6] WARP 安装 (可选)"
-read -p "❓ 是否现在安装 WARP？(y/n, 默认 n): " install_warp
+# 修复：加上 < /dev/tty 强制从键盘读取输入
+read -p "❓ 是否现在安装 WARP？(y/n, 默认 n): " install_warp < /dev/tty
 install_warp=${install_warp:-n}
 
 if [[ "$install_warp" =~ ^[Yy]$ ]]; then
