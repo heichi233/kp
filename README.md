@@ -7,12 +7,12 @@
 
 ```bash
 apt update && apt install -y curl wget
-wget -qO setup.sh [https://proxy.ooo.vg/raw.githubusercontent.com/heichi233/kp/main/setup.sh](https://proxy.ooo.vg/raw.githubusercontent.com/heichi233/kp/main/setup.sh) && sudo bash setup.sh
+wget -qO setup.sh https://proxy.ooo.vg/raw.githubusercontent.com/heichi233/kp/main/setup.sh && sudo bash setup.sh
 ```
 
 ## Alpine 安装命令
 
 ```bash
 apk update && apk add curl wget
-wget -qO setup.sh [https://proxy.ooo.vg/raw.githubusercontent.com/heichi233/kp/main/setup.sh](https://proxy.ooo.vg/raw.githubusercontent.com/heichi233/kp/main/setup.sh) && sh setup.sh
+wget -qO setup.sh https://proxy.ooo.vg/raw.githubusercontent.com/heichi233/kp/main/setup.sh && sh setup.sh
 ```
