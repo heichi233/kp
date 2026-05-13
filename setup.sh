@@ -170,9 +170,9 @@ run_debian() {
     echo "💡 提示 2: 探针安装后若未上线，请自行确认探针主控端已开启 IPv6。"
     echo ""
     
-    echo "🌍 请选择为该探针指定地理位置 (将自动追加伪装 IP):"
-    echo "  1. 朝鲜 (附加参数: --custom-ipv4 175.45.176.0)"
-    echo "  2. 南极 (附加参数: --custom-ipv4 104.28.212.152)"
+    echo "🌍 请选择探针区域:"
+    echo "  1. 朝鲜"
+    echo "  2. 南极"
     echo "  0. 跳过 (不指定地区)"
     read -p "请输入选项 [0/1/2] (默认 0): " region_choice < /dev/tty
     
