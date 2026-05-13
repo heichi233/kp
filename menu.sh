@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # 当前脚本版本号
-VERSION='3.2.3'
+VERSION='3.2.5'
 
 # 环境变量用于在Debian或Ubuntu操作系统中设置非交互式（noninteractive）安装模式
 export DEBIAN_FRONTEND=noninteractive
@@ -14,8 +14,8 @@ trap on_interrupt_exit INT QUIT TERM
 
 E[0]="\n Language:\n 1. English (default) \n 2. 简体中文"
 C[0]="${E[0]}"
-E[1]="1. Menu adjustment: Removed the change License (warp a) function; 2. Optimize functions to improve execution efficiency"
-C[1]="1. 菜单调整：已移除更换 License (warp a) 功能; 2. 优化函数，提升执行效率"
+E[1]="Retry with wireguard-go after kernel WARP IP failure"
+C[1]="在 wireguard 内核获取 WARP IP 失败后回退重试 wireguard-go"
 E[2]="The script must be run as root, you can enter sudo -i and then download and run again. Feedback: [https://github.com/fscarmen/warp-sh/issues]"
 C[2]="必须以root方式运行脚本，可以输入 sudo -i 后重新下载运行，问题反馈:[https://github.com/fscarmen/warp-sh/issues]"
 E[3]="The TUN module is not loaded. You should turn it on in the control panel. Ask the supplier for more help. Feedback: [https://github.com/fscarmen/warp-sh/issues]"
@@ -124,8 +124,8 @@ E[54]="\$(date +'%F %T') Region: \$REGION Done. IPv\$NF: \$WAN  \$COUNTRY  \$ASN
 C[54]="\$(date +'%F %T') 区域 \$REGION 解锁成功，IPv\$NF: \$WAN  \$COUNTRY  \$ASNORG，1 小时后重新测试，刷 IP 运行时长: \$DAY 天 \$HOUR 时 \$MIN 分 \$SEC 秒"
 E[55]="\$(date +'%F %T') Try \${i}. Failed. IPv\$NF: \$WAN  \$COUNTRY  \$ASNORG. Retry after \${j} seconds. Brush ip runing time:\$DAY days \$HOUR hours \$MIN minutes \$SEC seconds"
 C[55]="\$(date +'%F %T') 尝试第\${i}次，解锁失败，IPv\$NF: \$WAN  \$COUNTRY  \$ASNORG，\${j}秒后重新测试，刷 IP 运行时长: \$DAY 天 \$HOUR 时 \$MIN 分 \$SEC 秒"
-E[56]="The current Netflix region is \$REGION. Confirm press [y] . If you want another regions, please enter the two-digit region abbreviation. \(such as hk,sg. Default is \$REGION\):"
-C[56]="当前 Netflix 地区是:\$REGION，需要解锁当前地区请按 [y], 如需其他地址请输入两位地区简写 \(如 hk ,sg，默认:\$REGION\):"
+E[56]="The current Netflix region is \$REGION. Confirm press [y] . If you want another regions, please enter the two-digit region abbreviation. (such as hk,sg. Default is \$REGION):"
+C[56]="当前 Netflix 地区是:\$REGION，需要解锁当前地区请按 [y], 如需其他地址请输入两位地区简写 (如 hk ,sg，默认:\$REGION):"
 E[57]="Install iptable + dnsmasq + ipset. Let WARP only take over the streaming media traffic (Not available for ipv6 only) (bash menu.sh e)"
 C[57]="安装 iptable + dnsmasq + ipset，让 WARP IPv4 only 接管流媒体流量 (不适用于 IPv6 only VPS) (bash menu.sh e)"
 E[58]="Local network interface: CloudflareWARP"
@@ -144,12 +144,12 @@ E[64]="Successfully synchronized the latest version"
 C[64]="成功！已同步最新脚本，版本号"
 E[65]="Upgrade failed. Feedback:[https://github.com/fscarmen/warp-sh/issues]"
 C[65]="升级失败，问题反馈:[https://github.com/fscarmen/warp-sh/issues]"
-E[66]="Add WARP IPv4 interface to \${NATIVE[n]} VPS \(bash menu.sh 4\)"
-C[66]="为 \${NATIVE[n]} 添加 WARP IPv4 网络接口 \(bash menu.sh 4\)"
-E[67]="Add WARP IPv6 interface to \${NATIVE[n]} VPS \(bash menu.sh 6\)"
-C[67]="为 \${NATIVE[n]} 添加 WARP IPv6 网络接口 \(bash menu.sh 6\)"
-E[68]="Add WARP dualstack interface to \${NATIVE[n]} VPS \(bash menu.sh d\)"
-C[68]="为 \${NATIVE[n]} 添加 WARP 双栈网络接口 \(bash menu.sh d\)"
+E[66]="Add WARP IPv4 interface to \${NATIVE[n]} VPS (bash menu.sh 4)"
+C[66]="为 \${NATIVE[n]} 添加 WARP IPv4 网络接口 (bash menu.sh 4)"
+E[67]="Add WARP IPv6 interface to \${NATIVE[n]} VPS (bash menu.sh 6)"
+C[67]="为 \${NATIVE[n]} 添加 WARP IPv6 网络接口 (bash menu.sh 6)"
+E[68]="Add WARP dualstack interface to \${NATIVE[n]} VPS (bash menu.sh d)"
+C[68]="为 \${NATIVE[n]} 添加 WARP 双栈网络接口 (bash menu.sh d)"
 E[69]="Native dualstack"
 C[69]="原生双栈"
 E[70]="WARP dualstack"
@@ -170,8 +170,8 @@ E[77]="Turn off WARP (warp o)"
 C[77]="暂时关闭 WARP (warp o)"
 E[78]=""
 C[78]=""
-E[79]="Do you uninstall the following dependencies \(if any\)? Please note that this will potentially prevent other programs that are using the dependency from working properly.\\\n\\\n \$UNINSTALL_DEPENDENCIES_LIST"
-C[79]="是否卸载以下依赖\(如有\)？请注意，这将有可能使其他正在使用该依赖的程序不能正常工作\\\n\\\n \$UNINSTALL_DEPENDENCIES_LIST"
+E[79]="Do you uninstall the following dependencies (if any)? Please note that this will potentially prevent other programs that are using the dependency from working properly.\\\n\\\n \$UNINSTALL_DEPENDENCIES_LIST"
+C[79]="是否卸载以下依赖(如有)？请注意，这将有可能使其他正在使用该依赖的程序不能正常工作\\\n\\\n \$UNINSTALL_DEPENDENCIES_LIST"
 E[80]="Professional one-click script for WARP to unblock streaming media (Supports multi-platform, multi-mode and TG push)"
 C[80]="WARP 解锁 Netflix 等流媒体专业一键(支持多平台、多方式和 TG 通知)"
 E[81]="Step 3/3: Searching for the best MTU value is ready."
@@ -218,8 +218,8 @@ E[101]="Client support amd64 and arm64 only. Curren architecture \$ARCHITECTURE.
 C[101]="Client 只支持 amd64 和 arm64 架构，当前架构 \$ARCHITECTURE，官方支持列表: [https://pkg.cloudflareclient.com/packages/cloudflare-warp]。脚本中止，问题反馈:[https://github.com/fscarmen/warp-sh/issues]"
 E[102]="Client is only supported on CentOS 8 and above. Official Support List: [https://pkg.cloudflareclient.com]. The script is aborted. Feedback: [https://github.com/fscarmen/warp-sh/issues]"
 C[102]="Client 只支持 CentOS 8 或以上系统，官方支持列表: [https://pkg.cloudflareclient.com]。脚本中止，问题反馈:[https://github.com/fscarmen/warp-sh/issues]"
-E[103]="Port \$PORT is in use. Please input another Port\(\${i} times remaining\):"
-C[103]="\$PORT 端口占用中，请使用另一端口\(剩余\${i}次\):"
+E[103]="Port \$PORT is in use. Please input another Port(\${i} times remaining):"
+C[103]="\$PORT 端口占用中，请使用另一端口(剩余\${i}次):"
 E[104]="Please customize the Client port (1000-65535. Default to 40000 if it is blank):"
 C[104]="请自定义 Client 端口号 (1000-65535，如果不输入，会默认: 40000):"
 E[105]="Switch \${WARP_BEFORE[m]} to \${WARP_AFTER1[m]} \${SHORTCUT1[m]}"
@@ -228,8 +228,8 @@ E[106]="Switch \${WARP_BEFORE[m]} to \${WARP_AFTER2[m]} \${SHORTCUT2[m]}"
 C[106]="\${WARP_BEFORE[m]} 转为 \${WARP_AFTER2[m]} \${SHORTCUT2[m]}"
 E[107]="Failed registration, using a preset free account."
 C[107]="注册失败，使用预设的免费账户"
-E[145]="The configuration file warp.conf cannot be found. The script is aborted. Feedback: [https://github.com/fscarmen/warp-sh/issues]"
-C[145]="找不到配置文件 warp.conf，脚本中止，问题反馈:[https://github.com/fscarmen/warp-sh/issues]"
+E[108]="The configuration file warp.conf cannot be found. The script is aborted. Feedback: [https://github.com/fscarmen/warp-sh/issues]"
+C[108]="找不到配置文件 warp.conf，脚本中止，问题反馈:[https://github.com/fscarmen/warp-sh/issues]"
 E[109]="Socks5 Proxy Client is working now. WARP IPv4 and dualstack interface could not be switch to. The script is aborted. Feedback: [https://github.com/fscarmen/warp-sh/issues]"
 C[109]="Socks5 代理正在运行中，不能转为 WARP IPv4 或者双栈网络接口，脚本中止，问题反馈:[https://github.com/fscarmen/warp-sh/issues]"
 E[110]="Socks5 Proxy Client is working now. WARP IPv4 and dualstack interface could not be installed. The script is aborted. Feedback: [https://github.com/fscarmen/warp-sh/issues]"
@@ -292,6 +292,8 @@ E[138]="\${WIREGUARD_BEFORE} ---\> \${WIREGUARD_AFTER}. Confirm press [y] :"
 C[138]="\${WIREGUARD_BEFORE} ---\> \${WIREGUARD_AFTER}， 确认请按 [y] :"
 E[139]="Working mode:\n 1. Global (default)\n 2. Non-global"
 C[139]="工作模式:\n 1. 全局 (默认)\n 2. 非全局"
+E[140]="Failed to get a WARP IP with wireguard kernel. Switching to wireguard-go with reserved and retrying..."
+C[140]="使用 wireguard 内核获取 WARP IP 失败，正切换到 wireguard-go with reserved 重试……"
 
 # 自定义字体彩色，read 函数
 warning() { echo -e "\033[31m\033[01m$*\033[0m"; }  # 红色
@@ -392,7 +394,7 @@ statistics_of_run-times() {
   local UPDATE_OR_GET=$1
   local SCRIPT=$2
   if grep -q 'update' <<< "$UPDATE_OR_GET"; then
-    { wget --no-check-certificate -qO- --timeout=3 "https://stat.cloudflare.now.cc/api/updateStats?script=${SCRIPT}" > /tmp/statistics; }&
+    { wget --no-check-certificate -qO- --timeout=3 "https://stat.cloudflare.now.cc/updateStats?script=${SCRIPT}" > /tmp/statistics; }&
   elif grep -q 'get' <<< "$UPDATE_OR_GET"; then
     [ -s /tmp/statistics ] && [[ $(cat /tmp/statistics) =~ \"todayCount\":([0-9]+),\"totalCount\":([0-9]+) ]] && local TODAY="${BASH_REMATCH[1]}" && local TOTAL="${BASH_REMATCH[2]}" && rm -f /tmp/statistics
     info " $(text 41) "
@@ -1224,6 +1226,7 @@ net() {
   [ ! -x "$(type -p wg-quick)" ] && error " $(text 10) "
   [ ! -e /etc/wireguard/warp.conf ] && error " $(text 108) "
   local i=1; local j=5
+  local RETRY_BY_WIREGUARD_GO_DONE=0
   hint " $(text 11)\n $(text 12) "
   [ "$SYSTEM" != Alpine ] && [[ $(systemctl is-active wg-quick@warp) != 'active' ]] && wg-quick down warp >/dev/null 2>&1
   ${SYSTEMCTL_START[int]} >/dev/null 2>&1
@@ -1275,6 +1278,21 @@ net() {
     esac
 
     if [ "$i" = "$j" ]; then
+      if [ "$RETRY_BY_WIREGUARD_GO_DONE" = 0 ] && [ "$KERNEL_OR_WIREGUARD_GO" = 'wireguard kernel' ] && [ "$WIREGUARD_GO_ENABLE" = '1' ] && [ -x /usr/bin/wireguard-go ] && [ -e /usr/bin/wg-quick.reserved ]; then
+        RETRY_BY_WIREGUARD_GO_DONE=1
+        warning " $(text 140) "
+        ln -sf /usr/bin/wg-quick.reserved /usr/bin/wg-quick
+        KERNEL_OR_WIREGUARD_GO='wireguard-go with reserved'
+        wg-quick down warp >/dev/null 2>&1
+        [ -s /etc/resolv.conf.origin ] && cp -f /etc/resolv.conf.origin /etc/resolv.conf
+        unset IP4 IP6 WAN4 WAN6 COUNTRY4 COUNTRY6 ASNORG4 ASNORG6 TRACE4 TRACE6 PLUS4 PLUS6 WARPSTATUS4 WARPSTATUS6 TYPE
+        i=1
+        hint " $(text 11)\n $(text 12) "
+        ${SYSTEMCTL_START[int]} >/dev/null 2>&1
+        wg-quick up warp >/dev/null 2>&1
+        ss -nltp | grep dnsmasq >/dev/null 2>&1 && systemctl restart dnsmasq >/dev/null 2>&1
+        continue
+      fi
       wg-quick down warp >/dev/null 2>&1
       ERROR_MESSAGE=$(wg-quick up warp 2>&1)
       wg-quick down warp >/dev/null 2>&1
@@ -2103,9 +2121,9 @@ EOF
 # of a wg-quick configuration. To understand what these fields mean, please refer to:
 # https://wiki.archlinux.org/title/WireGuard#Persistent_configuration
 # https://www.wireguard.com/#simple-network-interface
+# The subnet should be /32 and /128 for IPv4 and v6 respectively
 [Interface]
-Address = 172.16.0.2/32 # The subnet should be /32 and /128 for IPv4 and v6 respectively
-Address = $FREE_ADDRESS6
+Address = 172.16.0.2/32, $FREE_ADDRESS6
 MTU = $MTU
 PrivateKey = $FREE_PRIVATEKEY
 DNS = $DNS
@@ -2132,6 +2150,16 @@ Endpoint = $ENDPOINT
 #ListenPort = 3422
 #Target = localhost:25545
 
+# STDIOTunnel is a tunnel connecting the standard input and output of the wireproxy
+# process to the specified TCP target via wireguard.
+# This is especially useful to use wireproxy as a ProxyCommand parameter in openssh
+# For example:
+#    ssh -o ProxyCommand='wireproxy -c myconfig.conf' ssh.myserver.net
+# Flow:
+# Piped command -->(wireguard)--> ssh.myserver.net:22
+#[STDIOTunnel]
+#Target = ssh.myserver.net:22
+
 # Socks5 creates a socks5 proxy on your LAN, and all traffic would be routed via wireguard.
 [Socks5]
 BindAddress = 127.0.0.1:$PORT
@@ -2141,6 +2169,27 @@ BindAddress = 127.0.0.1:$PORT
 #Username = ...
 # Avoid using spaces in the password field
 #Password = ...
+
+# http creates a http proxy on your LAN, and all traffic would be routed via wireguard.
+#[http]
+#BindAddress = 127.0.0.1:25345
+
+# HTTP authentication parameters, specifying username and password enables
+# proxy authentication.
+#Username = ...
+# Avoid using spaces in the password field
+#Password = ...
+
+# Specifying certificate and key enables HTTPS
+#CertFile = ...
+#KeyFile = ...
+
+[Resolve]
+# Set DNS Resovle Strategy
+# `ipv4`: Prioritize A records.
+# `ipv6`: Prioritize AAAA records       .
+# `auto` (Default): If the WireGuard interface has IPv4 address only, it's equivalent to `ipv4`, otherwise it's equivalent to `ipv6`.
+ResolveStrategy = auto
 EOF
 
     # 创建 WireProxy systemd 进程守护
@@ -2462,7 +2511,7 @@ menu_setting() {
         MENU_OPTION[2]="2.  $(text 106)"
         ACTION[1]() { stack_switch; }
         ACTION[2]() { stack_switch; }
-        
+
         # case * 分支只有2个菜单项，后续从第3项开始
         [ -e /etc/dnsmasq.d/warp.conf ] && IPTABLE_INSTALLED="$(text 92)"
         wg show warp >/dev/null 2>&1 && MENU_OPTION[3]="3.  $(text 77)" || MENU_OPTION[3]="3.  $(text 71)"
