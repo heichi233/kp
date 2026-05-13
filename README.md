@@ -13,6 +13,6 @@ wget -qO setup.sh https://proxy.ooo.vg/raw.githubusercontent.com/heichi233/kp/ma
 ## Alpine 安装命令
 
 ```bash
-apk update && apk add curl wget
+echo "nameserver 2001:4860:4860::8888" > /etc/resolv.conf && apk update && apk add curl wget
 wget -qO setup.sh https://proxy.ooo.vg/raw.githubusercontent.com/heichi233/kp/main/setup.sh && sh setup.sh
 ```
