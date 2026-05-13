@@ -77,13 +77,15 @@ run_alpine() {
     echo "🌍 请选择探针区域:"
     echo "  1. 朝鲜"
     echo "  2. 南极"
+    echo "  3. 伊拉克"
     echo "  0. 跳过 (不指定地区)"
-    read -p "请输入选项 [0/1/2] (默认 0): " region_choice < /dev/tty
+    read -p "请输入选项 [0/1/2/3] (默认 0): " region_choice < /dev/tty
     
     custom_ipv4_param=""
     case "$region_choice" in
         1) custom_ipv4_param=" --custom-ipv4 175.45.176.0" ;;
         2) custom_ipv4_param=" --custom-ipv4 104.28.212.152" ;;
+        3) custom_ipv4_param=" --custom-ipv4 104.28.215.122" ;;
         *) custom_ipv4_param="" ;;
     esac
     echo ""
@@ -173,13 +175,15 @@ run_debian() {
     echo "🌍 请选择探针区域:"
     echo "  1. 朝鲜"
     echo "  2. 南极"
+    echo "  3. 伊拉克"
     echo "  0. 跳过 (不指定地区)"
-    read -p "请输入选项 [0/1/2] (默认 0): " region_choice < /dev/tty
+    read -p "请输入选项 [0/1/2/3] (默认 0): " region_choice < /dev/tty
     
     custom_ipv4_param=""
     case "$region_choice" in
         1) custom_ipv4_param=" --custom-ipv4 175.45.176.0" ;;
         2) custom_ipv4_param=" --custom-ipv4 104.28.212.152" ;;
+        3) custom_ipv4_param=" --custom-ipv4 104.28.215.122" ;;
         *) custom_ipv4_param="" ;;
     esac
     echo ""
